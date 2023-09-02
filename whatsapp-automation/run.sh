@@ -13,6 +13,7 @@ function copy_base_dir_content_to_multiple_dirs() {
 function create_and_activate_venv() {
     python3 -m venv venv
     source ./venv/bin/activate
+    pip3 install -r requirements.txt
 }
 
 # For each directory, run the backend app with service port as an argument.
