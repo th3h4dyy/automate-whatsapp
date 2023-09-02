@@ -1,4 +1,4 @@
-from time import sleep
+from datetime import datetime, timedelta
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 
@@ -32,7 +32,7 @@ driver.get("https://web.whatsapp.com/")
 
 
 while True:
-    sleep(10)
+    time.sleep(10)
     driver.save_screenshot("statics/qr.png")
     break
 
@@ -44,15 +44,19 @@ app = FastAPI()
 
 
 def send_message(phone, message):
+    end = datetime.now() + timedelta(minutes=1)
     driver.get(f"https://web.whatsapp.com/send/?phone={phone}&text={message}&type=phone_number&app_absent=0")
     i = True
     while i:
         try:
+            if time.now() > end:
+                i = False
+                break
             driver.find_element(by=By.XPATH, value='//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button').click()
             i = False
             break
         except:
-            sleep(1)
+            time.sleep(1)
          
     
 
